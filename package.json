@@ -1,0 +1,27 @@
+{
+  "name": "wilp2",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "todo",
+    "ai",
+    "productivity",
+    "adhd"
+  ],
+  "author": "",
+  "license": "ISC",
+  "description": "WilP2.0 - AI-Enhanced To-Do Application for ADHD-friendly project management",
+  "dependencies": {
+    "@google/genai": "^1.12.0",
+    "@google/generative-ai": "^0.24.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "mongoose": "^8.17.0"
+  }
+}

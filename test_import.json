@@ -1,0 +1,156 @@
+{
+  "title": "ML-Based Trading Strategy System",
+  "description": "A machine learning-based trading system that extracts financial data, enriches it with indicators, selects features, generates strategies, trains predictive models, and executes trades.",
+  "tasks": [
+    {
+      "title": "Data Collection and Preparation",
+      "description": "Collect market data and enhance it with technical indicators for modeling.",
+      "notes": "Data already collected from cTrader (OSCL). No indicators provided, enriched manually.",
+      "completed": true,
+      "subtasks": [
+        {
+          "title": "Extract raw OHLCV data",
+          "description": "Pull historical OHLCV data from cTrader or other sources.",
+          "notes": "Done using custom scripts",
+          "completed": true
+        },
+        {
+          "title": "Add technical indicators",
+          "description": "Enrich data with indicators like RSI, MACD, EMA, Bollinger Bands, etc.",
+          "notes": "Used pandas-ta to enrich data",
+          "completed": true
+        },
+        {
+          "title": "Format target variable",
+          "description": "Create a supervised learning label — e.g., future direction or return.",
+          "notes": "Binary target preferred for first model — up/down in n candles",
+          "completed": false
+        }
+      ]
+    },
+    {
+      "title": "Feature Engineering & Selection",
+      "description": "Select relevant features for modeling and normalize the dataset.",
+      "notes": "Can test correlation heatmaps, SHAP, or RFE later for feature reduction.",
+      "completed": false,
+      "subtasks": [
+        {
+          "title": "Clean and normalize features",
+          "description": "Standardize or scale features if needed.",
+          "notes": "Try MinMaxScaler or StandardScaler based on model type.",
+          "completed": false
+        },
+        {
+          "title": "Initial manual feature selection",
+          "description": "Choose 10–15 useful features based on domain knowledge.",
+          "notes": "Start simple with MACD, RSI, SMA ratios, etc.",
+          "completed": false
+        },
+        {
+          "title": "Optional: Feature importance analysis",
+          "description": "Use XGBoost feature importances or SHAP to refine selection.",
+          "notes": "Not critical for first version",
+          "completed": false
+        }
+      ]
+    },
+    {
+      "title": "Modeling",
+      "description": "Train ML models to predict price direction or return based on selected features.",
+      "notes": "Start with Random Forest and XGBoost, then experiment with LSTM.",
+      "completed": false,
+      "subtasks": [
+        {
+          "title": "Prepare training/validation sets",
+          "description": "Split dataset using time series split to avoid data leakage.",
+          "notes": "Use sklearn TimeSeriesSplit (5 splits)",
+          "completed": false
+        },
+        {
+          "title": "Train baseline model (Random Forest)",
+          "description": "Train a Random Forest classifier and evaluate.",
+          "notes": "Use accuracy, precision/recall, and confusion matrix",
+          "completed": false
+        },
+        {
+          "title": "Train advanced model (XGBoost)",
+          "description": "Train XGBoost with tuning to improve performance.",
+          "notes": "Use Optuna or GridSearchCV later for hyperparameters",
+          "completed": false
+        },
+        {
+          "title": "Evaluate with backtesting signals",
+          "description": "Convert predictions to trading signals and simulate basic strategy.",
+          "notes": "Backtest accuracy is less important than profitability",
+          "completed": false
+        }
+      ]
+    },
+    {
+      "title": "Backtesting and Strategy Evaluation",
+      "description": "Test how the model performs in realistic trading conditions.",
+      "notes": "Use backtesting.py or write a simple simulation script.",
+      "completed": false,
+      "subtasks": [
+        {
+          "title": "Convert model outputs to signals",
+          "description": "Define strategy rules (e.g., buy if prob > 0.6, sell if < 0.4).",
+          "notes": "Simple threshold logic to start",
+          "completed": false
+        },
+        {
+          "title": "Run backtest",
+          "description": "Simulate trading using historical data and record performance.",
+          "notes": "Track win rate, Sharpe, max drawdown, profit factor",
+          "completed": false
+        },
+        {
+          "title": "Compare to baseline strategy",
+          "description": "Benchmark model vs. buy-and-hold or simple SMA crossover.",
+          "notes": "Only keep strategies that beat baseline after costs",
+          "completed": false
+        }
+      ]
+    },
+    {
+      "title": "Strategy Optimization & Selection",
+      "description": "Refine and tune model and strategy parameters.",
+      "notes": "Optional step once first working version is tested.",
+      "completed": false,
+      "subtasks": [
+        {
+          "title": "Hyperparameter tuning",
+          "description": "Use GridSearchCV or Optuna to improve model performance.",
+          "notes": "Especially useful for XGBoost and LSTM",
+          "completed": false
+        },
+        {
+          "title": "Feature set optimization",
+          "description": "Try different feature sets and measure effect on performance.",
+          "notes": "",
+          "completed": false
+        }
+      ]
+    },
+    {
+      "title": "Live/Paper Trading Integration",
+      "description": "Connect model output to a trading platform for execution.",
+      "notes": "Do paper trading first. Connect to cTrader API later.",
+      "completed": false,
+      "subtasks": [
+        {
+          "title": "Build paper trading module",
+          "description": "Simulate real-time decision making using historical feed.",
+          "notes": "Use 1-minute or 5-minute resolution to mimic real-time",
+          "completed": false
+        },
+        {
+          "title": "API integration (cTrader or MetaTrader)",
+          "description": "Send trades via broker API with risk control.",
+          "notes": "cTrader Open API via Python wrappers",
+          "completed": false
+        }
+      ]
+    }
+  ]
+}
