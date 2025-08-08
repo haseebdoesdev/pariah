@@ -37,6 +37,25 @@ h1 {
     align-items: center;
 }
 
+.pomodoro {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+#timer-display {
+    font-size: 1.5rem;
+    color: #dcdcaa;
+    min-width: 80px;
+    text-align: center;
+}
+
+#timer-mode {
+    color: #569cd6;
+    font-weight: bold;
+}
+
 .btn-primary, .btn-secondary {
     padding: 10px 20px;
     border: none;

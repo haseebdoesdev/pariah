@@ -3,12 +3,18 @@ class WilpApp {
         this.projects = [];
         this.currentEditingNotes = null;
         this.completionSound = document.getElementById('completion-sound');
+        this.timerDuration = 25 * 60; // 25 minutes
+        this.breakDuration = 5 * 60; // 5 minutes
+        this.timeLeft = this.timerDuration;
+        this.timerMode = 'work';
+        this.timerInterval = null;
         this.init();
     }
 
     init() {
         this.bindEvents();
         this.loadProjects();
+        this.updateTimerDisplay();
     }
 
     bindEvents() {
@@ -59,6 +65,15 @@ class WilpApp {
             if (e.target.classList.contains('modal')) {
                 e.target.style.display = 'none';
             }
+        });
+
+        // Pomodoro timer events
+        document.getElementById('start-timer').addEventListener('click', () => {
+            this.toggleTimer();
+        });
+
+        document.getElementById('reset-timer').addEventListener('click', () => {
+            this.resetTimer();
         });
     }
 
@@ -407,6 +422,51 @@ class WilpApp {
             console.error('Error exporting project:', error);
             alert('Export failed');
         }
+    }
+
+    updateTimerDisplay() {
+        const minutes = String(Math.floor(this.timeLeft / 60)).padStart(2, '0');
+        const seconds = String(this.timeLeft % 60).padStart(2, '0');
+        document.getElementById('timer-display').textContent = `${minutes}:${seconds}`;
+        document.getElementById('timer-mode').textContent = this.timerMode === 'work' ? 'Focus' : 'Break';
+    }
+
+    toggleTimer() {
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+            this.timerInterval = null;
+            document.getElementById('start-timer').textContent = 'Start';
+        } else {
+            document.getElementById('start-timer').textContent = 'Pause';
+            this.timerInterval = setInterval(() => {
+                this.timeLeft--;
+                if (this.timeLeft <= 0) {
+                    this.switchMode();
+                }
+                this.updateTimerDisplay();
+            }, 1000);
+        }
+    }
+
+    resetTimer() {
+        clearInterval(this.timerInterval);
+        this.timerInterval = null;
+        this.timerMode = 'work';
+        this.timeLeft = this.timerDuration;
+        document.getElementById('start-timer').textContent = 'Start';
+        this.updateTimerDisplay();
+    }
+
+    switchMode() {
+        this.playCompletionFeedback();
+        if (this.timerMode === 'work') {
+            this.timerMode = 'break';
+            this.timeLeft = this.breakDuration;
+        } else {
+            this.timerMode = 'work';
+            this.timeLeft = this.timerDuration;
+        }
+        this.updateTimerDisplay();
     }
 
     showProjectCompletionMessage(message) {
